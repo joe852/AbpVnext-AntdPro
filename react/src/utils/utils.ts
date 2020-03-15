@@ -64,6 +64,25 @@ export const getRouteAuthority = (path: string, routeData: Route[]) => {
   return authorities;
 };
 
+const themeConfig = {
+  daybreak: 'daybreak',
+  '#1890ff': 'daybreak',
+  '#F5222D': 'dust',
+  '#FA541C': 'volcano',
+  '#FAAD14': 'sunset',
+  '#13C2C2': 'cyan',
+  '#52C41A': 'green',
+  '#2F54EB': 'geekblue',
+  '#722ED1': 'purple',
+};
+/**
+ * #1890ff -> daybreak
+ * @param val
+ */
+export function genThemeToString(val?: string): string {
+  return val && themeConfig[val] ? themeConfig[val] : val;
+}
+
 export function createTree(array: any[], parentIdProperty: string,
   idProperty: string, parentIdValue: number | null, childrenProperty: string,
   fieldMappings: any[]): any[] {
