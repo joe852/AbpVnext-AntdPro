@@ -1,5 +1,5 @@
 
-import { PageRequestDto } from "../../../services/data.d";
+import { PageRequestDto } from "../../../../services/data.d";
 
 export interface RoleQueryParams extends PageRequestDto {
   filter?: string;

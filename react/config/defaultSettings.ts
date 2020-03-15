@@ -47,7 +47,7 @@ export default {
   // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'sidemenu',
-  contentWidth: 'Fluid',
+  contentWidth: 'Fixed',
   fixedHeader: false,
   autoHideHeader: false,
   fixSiderbar: false,
@@ -55,7 +55,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'Ant Design Pro',
+  title: 'Antd Pro',
   pwa: false,
   iconfontUrl: '',
 } as DefaultSettings;

@@ -3,7 +3,6 @@ import { Effect } from 'dva';
 import { stringify } from 'querystring';
 import { router } from 'umi';
 import { login, logout } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import AppConsts from "../utils/appconst";
 
@@ -46,9 +45,9 @@ const Model: LoginModelType = {
         type: 'changeLoginStatus',
         payload: response,
       });
-/*       yield put({
+      yield put({
         type: 'global/getApplicationConfiguration',
-      }); */
+      });
       // Login successfully
       if (response.access_token !== undefined) {
         localStorage.setItem('token', response.access_token);
@@ -87,7 +86,6 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
       return {
         ...state,
         status: payload.status,

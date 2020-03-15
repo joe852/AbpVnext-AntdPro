@@ -35,11 +35,11 @@ const plugins: IPlugin[] = [
       },
       pwa: pwa
         ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
+          workboxPluginMode: 'InjectManifest',
+          workboxOptions: {
+            importWorkboxFrom: 'local',
+          },
+        }
         : false, // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
       // dll: {
@@ -117,19 +117,26 @@ export default {
             {
               path: '/admin',
               name: '管理',
-              icon: 'setting',
+              icon: 'tool',
               routes: [
                 {
-                  path: '/admin/user',
-                  name: '用户',
-                  icon: 'user',
-                  component: './admin/user',
-                },
-                {
-                  path: '/admin/role',
-                  name: '角色',
-                  icon: 'safety',
-                  component: './admin/role',
+                  path: '/admin/identity',
+                  name: '身份管理',
+                  icon: 'idcard',
+                  routes: [
+                    {
+                      path: '/admin/identity/user',
+                      name: '用户',
+                      icon: 'user',
+                      component: './admin/identity/identityuser',
+                    },
+                    {
+                      path: '/admin/identity/role',
+                      name: '角色',
+                      icon: 'safety',
+                      component: './admin/identity/identityrole',
+                    }
+                  ]
                 },
                 {
                   path: '/admin/auditlogging',
@@ -137,12 +144,18 @@ export default {
                   icon: 'schedule',
                   component: './admin/auditlog',
                 },
+                {
+                  path: '/admin/settings',
+                  name: '设置',
+                  icon: 'setting',
+                  component: './admin/settings',
+                },
               ],
             },
             {
               name: '个人设置',
               icon: 'smile',
-              hideInMenu:true,
+              hideInMenu: true,
               path: '/accountsettings',
               component: './common/AccountSettings',
             },

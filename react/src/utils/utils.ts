@@ -63,3 +63,47 @@ export const getRouteAuthority = (path: string, routeData: Route[]) => {
   });
   return authorities;
 };
+
+export function createTree(array: any[], parentIdProperty: string,
+  idProperty: string, parentIdValue: number | null, childrenProperty: string,
+  fieldMappings: any[]): any[] {
+  const tree: any = [];
+
+  const nodes = _.filter(array, [parentIdProperty, parentIdValue]);
+
+  _.forEach(nodes, node => {
+    const newNode = {
+      data: node,
+    };
+
+    mapFields(node, newNode, fieldMappings);
+
+    newNode[childrenProperty] = createTree(
+      array,
+      parentIdProperty,
+      idProperty,
+      node[idProperty],
+      childrenProperty,
+      fieldMappings,
+    );
+
+    tree.push(newNode);
+  });
+
+  return tree;
+}
+function mapFields(node: any, newNode: any, fieldMappings: any): void {
+  _.forEach(fieldMappings, fieldMapping => {
+    if (!fieldMapping.target) {
+      return;
+    }
+
+    if (fieldMapping.hasOwnProperty('value')) {
+      newNode[fieldMapping.target] = fieldMapping.value;
+    } else if (fieldMapping.source) {
+      newNode[fieldMapping.target] = node[fieldMapping.source];
+    } else if (fieldMapping.targetFunction) {
+      newNode[fieldMapping.target] = fieldMapping.targetFunction(node);
+    }
+  });
+}

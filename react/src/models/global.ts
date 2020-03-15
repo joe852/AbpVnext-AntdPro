@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 import { Subscription, Effect } from 'dva';
-
+import _ from "lodash";
 import { NoticeIconData } from '@/components/NoticeIcon';
 import { getConfiguration } from '@/services/global';
-import { queryNotices } from '@/pages/admin/user/service';
+import { setAuthority } from '@/utils/authority';
 import { ConnectState } from './connect.d';
 
 export namespace ApplicationConfiguration {
@@ -72,7 +72,6 @@ export interface GlobalModelType {
   state: GlobalModelState;
   effects: {
     getApplicationConfiguration: Effect;
-    fetchNotices: Effect;
     clearNotices: Effect;
     changeNoticeReadState: Effect;
   };
@@ -100,24 +99,6 @@ const GlobalModel: GlobalModelType = {
       yield put({
         type: 'saveConfigiration',
         payload: data,
-      });
-    },
-
-    *fetchNotices(_, { call, put, select }) {
-      const data = yield call(queryNotices);
-      yield put({
-        type: 'saveNotices',
-        payload: data,
-      });
-      const unreadCount: number = yield select(
-        (state: ConnectState) => state.global.notices.filter(item => !item.read).length,
-      );
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: {
-          totalCount: data.length,
-          unreadCount,
-        },
       });
     },
     *clearNotices({ payload }, { put, select }) {
@@ -165,6 +146,7 @@ const GlobalModel: GlobalModelType = {
 
   reducers: {
     saveConfigiration(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
+      setAuthority(_.keys(payload.auth.grantedPolicies));
       return {
         ...state,
         applicationConfiguration: payload,

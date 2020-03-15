@@ -1,4 +1,4 @@
-import { PageRequestDto } from "../../../services/data.d";
+import { PageRequestDto } from "@/services/data";
 
 export interface IdentityUserDto {
   tenantId: string;
@@ -29,6 +29,7 @@ export interface UserQueryParams extends PageRequestDto {
 }
 
 export interface IdentityUserCreateOrUpdateDto{
+  id?:string;
   password?:string;
   userName?:string;
   concurrencyStamp?:string;

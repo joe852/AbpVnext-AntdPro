@@ -53,7 +53,7 @@ const AuditLogging: React.FC<AuditLoggingProps> = props => {
       title: 'Http 请求',
       dataIndex: 'httpStatusCode',
       valueEnum: HttpStateCode,
-      width: 350,
+      width: 450,
       render: (_, record) => {
         let iconColor = "";
         let httpColor = "";

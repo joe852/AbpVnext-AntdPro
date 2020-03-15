@@ -1,0 +1,145 @@
+
+import React, { useRef, useState } from 'react';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
+import { PlusOutlined, DownOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
+import { Dispatch } from 'redux';
+import { connect } from 'dva';
+import { ConnectState } from '@/models/connect';
+
+import check from '@/components/Authorized/CheckPermissions';
+import Permissions from '@/utils/permissions';
+import PermissionManagement from '@/components/PermissionsManagement';
+import { GetPermissionListResultDto } from '@/services/data';
+import { IdentityUserDto, IdentityUserCreateOrUpdateDto } from './data';
+import { queryUsers } from './service';
+import CreateOrUpdateForm from './components/createOrUpdateForm';
+import { IdentityRoleDto } from '../identityrole/data';
+
+
+interface IdentityUserProps {
+  dispatch: Dispatch;
+  createOrUpdateUser?: IdentityUserCreateOrUpdateDto;
+  allRoles: IdentityRoleDto[];
+  permissions: GetPermissionListResultDto;
+}
+
+const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createOrUpdateUser, permissions }) => {
+
+  const actionRef = useRef<ActionType>();
+  const [modalVisible, handleModalVisible] = useState<boolean>(false);
+  const [userId, handleUserId] = useState<string>("")
+  const [permissionModalVisible, handlePermissionModalVisible] = useState<boolean>(false);
+  /**
+   * 编辑或新增用户
+   * @param id 用户id
+   */
+  const handleEditOrAdd = async (id: string | null = null) => {
+    await dispatch({
+      type: 'identityUser/getRoles',
+    })
+    await dispatch({
+      type: 'identityUser/getUser',
+      payload: id
+    })
+    handleModalVisible(true);
+  };
+  /**
+  * 编辑用户权限
+  * @param id 用户名称
+  */
+  const openPermissionModal = async (id: string) => {
+    await handleUserId(id);
+    await dispatch({
+      type: 'permission/getPermission',
+      payload: {
+        providerKey: id,
+        providerName: 'U',
+      }
+    })
+    await handlePermissionModalVisible(true);
+  };
+  const columns: ProColumns<IdentityUserDto>[] = [
+    {
+      title: '操作',
+      render: (_, record) =>
+        <Dropdown
+          overlay={
+            <Menu
+              selectedKeys={[]}
+            >
+              {
+                check(Permissions.AbpIdentity.Users.Create, <Menu.Item onClick={() => { handleEditOrAdd(record.id) }} key="edit">编辑</Menu.Item>, null)
+              }
+
+              <Menu.Item key="approval" onClick={() => openPermissionModal(record.id)}>权限</Menu.Item>
+              <Menu.Item key="remove">删除</Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type="primary">
+            <SettingOutlined /> 操作 <DownOutlined />
+          </Button>
+        </Dropdown>
+
+    },
+    {
+      title: '用户名',
+      dataIndex: 'name',
+    }, {
+      title: '邮箱地址',
+      dataIndex: 'email',
+    }, {
+      title: '手机号',
+      dataIndex: 'phoneNumber',
+    },
+  ]
+  return (
+    <PageHeaderWrapper>
+      <ProTable<IdentityUserDto>
+        headerTitle="用户信息"
+        actionRef={actionRef}
+        search={false}
+        rowKey="id"
+        toolBarRender={() => [
+          <Button icon={<PlusOutlined />} onClick={() => handleEditOrAdd()} type="primary" >
+            新建
+        </Button>
+        ]}
+        request={async (params = {}) => {
+          const response = await queryUsers({ skipCount: params.current! - 1, maxResultCount: params.pageSize });
+          const data = response.items;
+          return {
+            data,
+            page: params.current,
+            success: true,
+            total: data.totalCount,
+          }
+        }}
+        columns={columns}
+      />
+      <CreateOrUpdateForm
+        onSubmit={() => actionRef.current?.reload()}
+        modalVisible={modalVisible}
+        onCancel={() => handleModalVisible(false)}
+        allRoles={allRoles}
+        formValues={createOrUpdateUser}
+      />
+      <PermissionManagement
+        providerKey={userId}
+        providerName='U'
+        onCancel={() => handlePermissionModalVisible(false)}
+        modalVisible={permissionModalVisible}
+        permissions={permissions}
+      />
+    </PageHeaderWrapper>
+
+  )
+}
+
+export default connect(({ identityUser, permission }: ConnectState) => ({
+  allRoles: identityUser.allRoles,
+  createOrUpdateUser: identityUser.createOrUpdateUser,
+  permissions: permission.permissions
+}))(IdentityUser);

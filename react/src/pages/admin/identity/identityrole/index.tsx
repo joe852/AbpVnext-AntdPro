@@ -1,26 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { Button, Dropdown, Menu, Tag } from 'antd';
 import { PlusOutlined, DownOutlined, SettingOutlined } from '@ant-design/icons';
+import PermissionManagement from '@/components/PermissionsManagement';
+import { connect } from 'dva';
+import { ConnectState, ConnectProps } from '@/models/connect';
+import { GetPermissionListResultDto } from '@/services/data';
 import { IdentityRoleDto } from './data';
 import { queryRoles } from './service';
 
+interface IdentityRoleProps extends ConnectProps {
+  permissions: GetPermissionListResultDto;
+}
 
-
-const Role: React.FC = () => {
+const IdentityRole: React.FC<IdentityRoleProps> = props => {
+  const { permissions, dispatch } = props;
   const actionRef = useRef<ActionType>();
+  const [roleName, handleRoleName] = useState<string>('');
+  const [permissionModalVisible, handlePermissionModalVisible] = useState<boolean>(false);
+  /**
+ * 编辑用户权限
+ * @param id 用户名称
+ */
+  const openPermissionModal = async (name: string) => {
+    await handleRoleName(name);
+    await dispatch({
+      type: 'permission/getPermission',
+      payload: {
+        providerKey: name,
+        providerName: 'R',
+      }
+    })
+    await handlePermissionModalVisible(true);
+  };
   const columns: ProColumns<IdentityRoleDto>[] = [
     {
       title: '操作',
-      render: () =>
+      render: (_, record) =>
         <Dropdown
           overlay={
             <Menu
               selectedKeys={[]}
             >
               <Menu.Item key="edit">编辑</Menu.Item>
-              <Menu.Item key="approval">权限</Menu.Item>
+              <Menu.Item key="approval" onClick={() => openPermissionModal(record.name)}>权限</Menu.Item>
               <Menu.Item key="remove">删除</Menu.Item>
             </Menu>
           }
@@ -35,7 +59,7 @@ const Role: React.FC = () => {
       title: '角色名',
       dataIndex: 'name',
       render: (_, record) => <>{record.name}{record.isDefault ? <Tag style={{ borderRadius: 10, marginLeft: '.25rem' }} color="#108ee9">默认</Tag> : null}
-        {record.isPublic ? <Tag style={{ borderRadius: 10, marginLeft: '.25rem'  }} color="#17a2b8">公开</Tag> : null}</>
+        {record.isPublic ? <Tag style={{ borderRadius: 10, marginLeft: '.25rem' }} color="#17a2b8">公开</Tag> : null}</>
     },
   ]
   return (
@@ -62,7 +86,16 @@ const Role: React.FC = () => {
         }}
         columns={columns}
       />
+      <PermissionManagement
+        providerKey={roleName}
+        providerName='R'
+        onCancel={() => handlePermissionModalVisible(false)}
+        modalVisible={permissionModalVisible}
+        permissions={permissions}
+      />
     </PageHeaderWrapper>
   );
 }
-export default Role;
+export default connect(({ permission }: ConnectState) => ({
+  permissions: permission.permissions
+}))(IdentityRole);
