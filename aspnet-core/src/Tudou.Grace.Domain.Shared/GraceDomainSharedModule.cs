@@ -7,7 +7,7 @@ using Volo.Abp.IdentityServer;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.SettingManagement;
+using Tudou.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
@@ -36,7 +36,7 @@ namespace Tudou.Grace
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<GraceResource>("en")
+                    .Add<GraceResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/Grace");
             });

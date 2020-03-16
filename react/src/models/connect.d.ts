@@ -2,13 +2,12 @@ import { AnyAction } from 'redux';
 import { MenuDataItem } from '@ant-design/pro-layout';
 import { RouterTypes } from 'umi';
 import { GlobalModelState } from './global';
-import { DefaultSettings as SettingModelState } from '../../config/defaultSettings';
 import { StateType } from './login';
-import { RoleModelState } from "../pages/admin/role/model";
 import { AccountSettingsModalState } from "../pages/common/AccountSettings/model";
 import { AuditLogModalState } from "../pages/admin/auditlog/model";
 import { IdentityUserModelState } from "../pages/admin/identity/identityuser/model";
 import { PermissionModelState } from './permissions';
+import { SettingModelState } from './setting';
 
 export { GlobalModelState, SettingModelState };
 
@@ -37,7 +36,7 @@ export interface ConnectState {
   accountSettings:AccountSettingsModalState;
   auditLog:AuditLogModalState;
   identityUser:IdentityUserModelState;
-  permission:PermissionModelState
+  permission:PermissionModelState;
 }
 
 export interface Route extends MenuDataItem {

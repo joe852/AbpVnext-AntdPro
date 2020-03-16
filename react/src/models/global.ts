@@ -4,6 +4,7 @@ import _ from "lodash";
 import { NoticeIconData } from '@/components/NoticeIcon';
 import { getConfiguration } from '@/services/global';
 import { setAuthority } from '@/utils/authority';
+import { InitThemeSettings } from '@/utils/utils';
 import { ConnectState } from './connect.d';
 
 export namespace ApplicationConfiguration {
@@ -99,6 +100,11 @@ const GlobalModel: GlobalModelType = {
       yield put({
         type: 'saveConfigiration',
         payload: data,
+      });
+      const themeSettings=InitThemeSettings(data.setting.values);
+      yield put({
+        type: 'settings/saveAllThemeSettings',
+        payload: themeSettings,
       });
     },
     *clearNotices({ payload }, { put, select }) {

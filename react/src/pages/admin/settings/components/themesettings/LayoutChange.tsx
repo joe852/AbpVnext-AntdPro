@@ -1,9 +1,7 @@
 import React from 'react';
 import { List, Tooltip, Select, Switch } from 'antd';
 import { SettingItemProps } from '@ant-design/pro-layout/lib/SettingDrawer';
-
-import { Settings } from '@ant-design/pro-layout';
-import defaultSettings from '@ant-design/pro-layout/lib/defaultSettings';
+import { ThemeSettingsDto } from '@/services/data';
 
 
 export const renderLayoutSettingItem = (item: SettingItemProps) => {
@@ -19,11 +17,11 @@ export const renderLayoutSettingItem = (item: SettingItemProps) => {
   );
 };
 const LayoutSetting: React.FC<{
-  settings: Partial<Settings>;
+  settings: ThemeSettingsDto;
   changeSetting: (key: string, value: any, hideLoading?: boolean) => void;
 }> = ({ settings = {}, changeSetting }) => {
   const { contentWidth, fixedHeader, layout, fixSiderbar } =
-    settings || defaultSettings;
+    settings ;
   return (
     <List
       split={false}

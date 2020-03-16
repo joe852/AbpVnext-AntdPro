@@ -1,37 +1,60 @@
 import { Reducer } from 'redux';
-import defaultSettings, { DefaultSettings } from '../../config/defaultSettings';
+import { ThemeSettingsDto } from '@/services/data';
+import { Effect } from 'dva';
+import { getAllThemeSettings, updateAllThemeSettings } from '@/services/settings';
 
+export interface SettingModelState {
+  themeSettings: ThemeSettingsDto;
+}
 export interface SettingModelType {
   namespace: 'settings';
-  state: DefaultSettings;
+  state: SettingModelState;
+  effects: {
+    getAllThemeSettings: Effect;
+    updateAllThemeSettings: Effect;
+  };
   reducers: {
-    changeSetting: Reducer<DefaultSettings>;
+    saveAllThemeSettings: Reducer<SettingModelState>;
   };
 }
 
-const updateColorWeak: (colorWeak: boolean) => void = colorWeak => {
-  const root = document.getElementById('root');
-  if (root) {
-    root.className = colorWeak ? 'colorWeak' : '';
-  }
-};
 
 const SettingModel: SettingModelType = {
   namespace: 'settings',
-  state: defaultSettings,
+  state: {
+    themeSettings: {
+      navTheme: 'dark',
+      // 拂晓蓝
+      primaryColor: '#1890ff',
+      layout: 'sidemenu',
+      contentWidth: 'Fixed',
+      fixedHeader: false,
+      autoHideHeader: false,
+      fixSiderbar: false,
+      colorWeak: false,
+      title: "Antd Pro"
+    }
+  },
+  effects: {
+    *getAllThemeSettings(_, { call, put }) {
+      const response = yield call(getAllThemeSettings);
+      yield put({
+        type: 'saveAllThemeSettings',
+        payload: response,
+      })
+    },
+    *updateAllThemeSettings({ payload }, { call }) {
+      yield call(updateAllThemeSettings, payload);
+      window.location.reload();
+    }
+  },
   reducers: {
-    changeSetting(state = defaultSettings, { payload }) {
-      const { colorWeak, contentWidth } = payload;
-
-      if (state.contentWidth !== contentWidth && window.dispatchEvent) {
-        window.dispatchEvent(new Event('resize'));
-      }
-      updateColorWeak(!!colorWeak);
+    saveAllThemeSettings(state, { payload }) {
       return {
         ...state,
-        ...payload,
+        themeSettings: payload
       };
-    },
+    }
   },
 };
 export default SettingModel;

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { PageHeaderWrapper, GridContent } from '@ant-design/pro-layout';
 import { Menu } from 'antd';
 import { Dispatch, connect } from 'dva';
+import ThemeSettings from './components/themesettings/ThemeSettings';
 import styles from './style.less';
-import ThemeSettings from './components/ThemeSettings';
 
 const { Item } = Menu;
 type SettingsStateKeys = 'theme' | 'security';
@@ -16,7 +16,7 @@ interface SettingsState {
   selectKey: SettingsStateKeys;
 }
 interface SettingsProps {
-  dispatch?: Dispatch<any>;
+  dispatch?: Dispatch;
 }
 
 class Settings extends Component<
@@ -28,7 +28,7 @@ class Settings extends Component<
     constructor(props: SettingsProps) {
       super(props);
       const menuMap = {
-        theme: '界面设置',
+        theme: '主题设置',
         security: '个人设置',
       };
       this.state = {

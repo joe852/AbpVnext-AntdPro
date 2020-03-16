@@ -8,7 +8,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
-using Volo.Abp.SettingManagement;
+using Tudou.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 
 namespace Tudou.Grace

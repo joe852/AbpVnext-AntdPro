@@ -21,7 +21,7 @@
     <PackageReference Include="Tudou.Abp.AuditLogging.Domain" Version="2.2.1" />
     <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="2.2.1" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="2.2.1" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="2.2.1" />
+    <PackageReference Include="Tudou.Abp.SettingManagement.Domain" Version="2.2.1" />
   </ItemGroup>
 
 </Project>

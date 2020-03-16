@@ -40,29 +40,25 @@ const ThemeColor: React.ForwardRefRenderFunction<
   if (colorList.length < 1) {
     return null;
   }
-  console.log(colors);
   return (
     <div className={styles.themeColor} ref={ref}>
       <h3 className={styles.themeColorTitle}>{title}</h3>
       <div className="theme-color-content">
-        {colorList.map(({ key, color }) => {
-          const themeKey = genThemeToString(key);
-          return (
+        {colorList.map(({ color }) => (
             <Tooltip
               key={color}
               title={
-                key
+                genThemeToString(color)
               }
             >
               <Tag
                 className={styles.themeColorBlock}
                 color={color}
-                check={value === key || genThemeToString(value) === key}
-                onClick={() => onChange && onChange(key)}
+                check={value === color}
+                onClick={() => onChange && onChange(color)}
               />
             </Tooltip>
-          );
-        })}
+          ))}
       </div>
     </div>
   );

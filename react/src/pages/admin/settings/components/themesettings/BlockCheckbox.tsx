@@ -26,13 +26,13 @@ const BlockCheckbox: React.FC<BlockCheckboxProps> = ({
       key: 'sidemenu',
       url:
         'https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg',
-      title: "123",
+      title: "侧边菜单",
     },
     {
       key: 'topmenu',
       url:
         'https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg',
-      title:"123"
+      title:"顶部菜单"
     },
   ];
 

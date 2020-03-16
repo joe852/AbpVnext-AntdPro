@@ -6,8 +6,6 @@
 import ProLayout, {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
-  Settings,
-  SettingDrawer,
   DefaultFooter,
 } from '@ant-design/pro-layout';
 import React, { useEffect } from 'react';
@@ -20,6 +18,7 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
+import { ThemeSettingsDto } from '@/services/data';
 import logo from '../assets/logo.svg';
 
 const noMatch = (
@@ -41,7 +40,7 @@ export interface BasicLayoutProps extends ProLayoutProps {
   route: ProLayoutProps['route'] & {
     authority: string[];
   };
-  settings: Settings;
+  settings: ThemeSettingsDto;
   dispatch: Dispatch;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
@@ -190,14 +189,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
           {children}
         </Authorized>
       </ProLayout>
-      <SettingDrawer
-        settings={settings}
-      />
     </>
   );
 };
 
-export default connect(({ global, settings }: ConnectState) => ({
+export default connect(({ global,settings }: ConnectState) => ({
   collapsed: global.collapsed,
-  settings,
+  settings:settings.themeSettings,
 }))(BasicLayout);
