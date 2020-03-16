@@ -8,3 +8,8 @@ export async function queryRoles(params?: RoleQueryParams): Promise<any> {
     params,
   });
 }
+export async function deleteUser(id: string): Promise<any> {
+  return request(`api/identity/users/${id}`, {
+    method: 'DELETE',
+  });
+}

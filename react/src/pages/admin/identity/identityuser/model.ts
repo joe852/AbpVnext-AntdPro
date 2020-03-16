@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 import { IdentityUserCreateOrUpdateDto } from './data';
 import { getUserRoles, createUser, updateUser, getUser } from './service';
 import { IdentityRoleDto } from '../identityrole/data';
-import { queryRoles } from '../identityrole/service';
+import { queryRoles, deleteUser } from '../identityrole/service';
 
 
 
@@ -21,6 +21,7 @@ export interface IdentityUserModelType {
     getUser: Effect;
     createUser: Effect;
     updateUser: Effect;
+    deleteUser: Effect;
   };
   reducers: {
     saveRoles: Reducer<IdentityUserModelState>;
@@ -43,6 +44,9 @@ const RoleModel: IdentityUserModelType = {
         type: 'saveRoles',
         payload: response.items,
       })
+    },
+    *deleteUser({ payload }, { call }) {
+      yield call(deleteUser, payload);
     },
     *getUser({ payload }, { call, put }) {
       let response = {};

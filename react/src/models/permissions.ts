@@ -4,7 +4,7 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
 import { GetPermissionListResultDto } from '@/services/data';
-import { getPermissions } from '@/services/permission';
+import { getPermissions, updatePermissions } from '@/services/permission';
 
 
 export interface PermissionModelState {
@@ -16,6 +16,7 @@ export interface PermissionModelType {
   state: PermissionModelState;
   effects: {
     getPermission: Effect;
+    updatePermission: Effect;
   };
   reducers: {
     savePermission: Reducer<PermissionModelState>;
@@ -27,8 +28,8 @@ const RoleModel: PermissionModelType = {
 
   state: {
     permissions: {
-      entityDisplayName:'',
-      groups:[],
+      entityDisplayName: '',
+      groups: [],
     }
   },
 
@@ -39,7 +40,10 @@ const RoleModel: PermissionModelType = {
         type: 'savePermission',
         payload: response,
       })
-    }
+    },
+    *updatePermission({ payload }, { call }) {
+      yield call(updatePermissions, payload);
+    },
   },
   reducers: {
     savePermission(state, { payload }) {

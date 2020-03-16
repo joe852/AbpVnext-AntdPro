@@ -102,7 +102,6 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
           routes: [
             {
               path: '/',
@@ -122,17 +121,20 @@ export default {
                 {
                   path: '/admin/identity',
                   name: '身份管理',
+                  authority: ['AbpIdentity.Roles', 'AbpIdentity.Users'],
                   icon: 'idcard',
                   routes: [
                     {
                       path: '/admin/identity/user',
                       name: '用户',
                       icon: 'user',
+                      authority: ['AbpIdentity.Users'],
                       component: './admin/identity/identityuser',
                     },
                     {
                       path: '/admin/identity/role',
                       name: '角色',
+                      authority: ['AbpIdentity.Roles'],
                       icon: 'safety',
                       component: './admin/identity/identityrole',
                     }
@@ -147,6 +149,7 @@ export default {
                 {
                   path: '/admin/settings',
                   name: '设置',
+                  authority: ['AbpIdentity.SettingManagement'],
                   icon: 'setting',
                   component: './admin/settings',
                 },

@@ -2,8 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { PlusOutlined, DownOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu } from 'antd';
+import { PlusOutlined, DownOutlined, SettingOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu, Modal, message } from 'antd';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
@@ -17,7 +17,7 @@ import { queryUsers } from './service';
 import CreateOrUpdateForm from './components/createOrUpdateForm';
 import { IdentityRoleDto } from '../identityrole/data';
 
-
+const { confirm } = Modal;
 interface IdentityUserProps {
   dispatch: Dispatch;
   createOrUpdateUser?: IdentityUserCreateOrUpdateDto;
@@ -60,6 +60,27 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
     })
     await handlePermissionModalVisible(true);
   };
+  /**
+   * 删除用户
+   * @param id 用户名称
+   */
+  const handlDeleteUser = async (id: string) => {
+    confirm({
+      title: '确认删除此用户吗?',
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        dispatch({
+          type: 'identityUser/deleteUser',
+          payload: id,
+        });
+
+        // eslint-disable-next-line no-unused-expressions
+        actionRef.current?.reload();
+      },
+      onCancel() {
+      },
+    });
+  };
   const columns: ProColumns<IdentityUserDto>[] = [
     {
       title: '操作',
@@ -74,7 +95,7 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
               }
 
               <Menu.Item key="approval" onClick={() => openPermissionModal(record.id)}>权限</Menu.Item>
-              <Menu.Item key="remove">删除</Menu.Item>
+              <Menu.Item key="remove" onClick={() => handlDeleteUser(record.id)}>删除</Menu.Item>
             </Menu>
           }
         >

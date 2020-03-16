@@ -64,6 +64,7 @@ request.interceptors.request.use((url, options) => {
       ...options,
       headers: {
         ...options.headers,
+        "Accept-Language":"zh-Hans",
         Authorization: `Bearer ${token}`,
       },
     }
