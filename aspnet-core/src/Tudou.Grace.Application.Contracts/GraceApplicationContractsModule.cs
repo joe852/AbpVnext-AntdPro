@@ -11,7 +11,7 @@ namespace Tudou.Grace
 {
     [DependsOn(
         typeof(GraceDomainSharedModule),
-        typeof(AbpAuditLoggingApplicationContractsModule),
+         typeof(AbpAuditLoggingApplicationContractsModule),
         typeof(AbpAccountApplicationContractsModule),
         typeof(AbpFeatureManagementApplicationContractsModule),
         typeof(AbpIdentityApplicationContractsModule),

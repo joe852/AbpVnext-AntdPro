@@ -257,3 +257,4 @@ src/Tudou.Grace.Web.Host/Logs/*
 src/Tudou.Grace.IdentityServer/Logs/*
 src/Tudou.Grace.HttpApi.Host/Logs/*
 src/Tudou.Grace.HttpApi.Host/Logs/*
+src/Tudou.Grace.DbMigrator/Logs/*

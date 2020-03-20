@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="2.2.1" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="2.3.0" />
     <ProjectReference Include="..\..\src\Tudou.Grace.HttpApi.Client\Tudou.Grace.HttpApi.Client.csproj" />
   </ItemGroup>
   

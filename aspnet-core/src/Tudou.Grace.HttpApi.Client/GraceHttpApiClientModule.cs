@@ -16,8 +16,8 @@ namespace Tudou.Grace
         typeof(AbpAccountHttpApiClientModule),
         typeof(AbpIdentityHttpApiClientModule),
         typeof(AbpPermissionManagementHttpApiClientModule),
-        typeof(AbpSettingManagementHttpApiClientModule),
         typeof(AbpTenantManagementHttpApiClientModule),
+        typeof(AbpSettingManagementHttpApiClientModule),
         typeof(AbpFeatureManagementHttpApiClientModule)
     )]
     public class GraceHttpApiClientModule : AbpModule

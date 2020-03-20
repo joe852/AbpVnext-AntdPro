@@ -5,6 +5,7 @@ import { router } from 'umi';
 import { login, logout } from '@/services/login';
 import { getPageQuery } from '@/utils/utils';
 import AppConsts from "../utils/appconst";
+import Store from './../utils/store';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -50,7 +51,7 @@ const Model: LoginModelType = {
       });
       // Login successfully
       if (response.access_token !== undefined) {
-        localStorage.setItem('token', response.access_token);
+        Store.SetToken(response.access_token);
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };

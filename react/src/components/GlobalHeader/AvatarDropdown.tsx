@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { ConnectProps, ConnectState } from '@/models/connect';
 import { ApplicationConfiguration } from '@/models/global';
-import { router } from 'umi';
+import {history} from 'umi'
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -27,7 +27,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
         });
       }
     } else if (key === 'settings') {
-      router.push('/accountsettings')
+      history.push('/accountsettings')
     }
     else if (key === 'center') {
        message.info('开发中。。。')

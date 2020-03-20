@@ -1,5 +1,5 @@
-﻿using Tudou.Abp.AuditLogging;
-using Tudou.Grace.Localization;
+﻿using Tudou.Grace.Localization;
+using Tudou.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -36,7 +36,7 @@ namespace Tudou.Grace
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<GraceResource>("zh-Hans")
+                    .Add<GraceResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/Grace");
             });

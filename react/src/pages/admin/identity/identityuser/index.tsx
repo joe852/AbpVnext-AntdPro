@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { PlusOutlined, DownOutlined, SettingOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Modal, message } from 'antd';
+import { Button, Dropdown, Menu, Modal } from 'antd';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
@@ -73,11 +73,10 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
           type: 'identityUser/deleteUser',
           payload: id,
         });
-
-        // eslint-disable-next-line no-unused-expressions
-        actionRef.current?.reload();
+        actionRef.current!.reload();
       },
       onCancel() {
+
       },
     });
   };

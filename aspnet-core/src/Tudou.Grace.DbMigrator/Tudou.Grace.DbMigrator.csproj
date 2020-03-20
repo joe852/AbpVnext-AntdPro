@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="2.2.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="2.3.0" />
     <ProjectReference Include="..\Tudou.Grace.Application.Contracts\Tudou.Grace.Application.Contracts.csproj" />
     <ProjectReference Include="..\Tudou.Grace.EntityFrameworkCore.DbMigrations\Tudou.Grace.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>

@@ -9,6 +9,7 @@ import { ConnectState, ConnectProps } from '@/models/connect';
 import { GetPermissionListResultDto } from '@/services/data';
 import { IdentityRoleDto } from './data';
 import { queryRoles } from './service';
+import CreateOrUpdateForm from './components/createOrUpdateForm';
 
 interface IdentityRoleProps extends ConnectProps {
   permissions: GetPermissionListResultDto;
@@ -18,6 +19,7 @@ const IdentityRole: React.FC<IdentityRoleProps> = props => {
   const { permissions, dispatch } = props;
   const actionRef = useRef<ActionType>();
   const [roleName, handleRoleName] = useState<string>('');
+  const [modalVisible, handleModalVisible] = useState<boolean>(false);
   const [permissionModalVisible, handlePermissionModalVisible] = useState<boolean>(false);
   /**
  * 编辑用户权限
@@ -70,7 +72,7 @@ const IdentityRole: React.FC<IdentityRoleProps> = props => {
         search={false}
         rowKey="id"
         toolBarRender={() => [
-          <Button icon={<PlusOutlined />} type="primary" >
+          <Button onClick={() => handleModalVisible(true)} icon={<PlusOutlined />} type="primary" >
             新建
     </Button>
         ]}
@@ -93,6 +95,9 @@ const IdentityRole: React.FC<IdentityRoleProps> = props => {
         modalVisible={permissionModalVisible}
         permissions={permissions}
       />
+      <CreateOrUpdateForm
+        visible={modalVisible}
+        onCancel={() => handleModalVisible(false)} />
     </PageHeaderWrapper>
   );
 }

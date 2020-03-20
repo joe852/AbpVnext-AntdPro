@@ -5,6 +5,7 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 import AppConsts from './appconst';
+import Store from './store';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -58,7 +59,7 @@ const request = extend({
 
 // request拦截器, 添加token
 request.interceptors.request.use((url, options) => {
-  const token = localStorage.getItem("token");
+  const token = Store.GetToken();
   if (token) {
     options = {
       ...options,
