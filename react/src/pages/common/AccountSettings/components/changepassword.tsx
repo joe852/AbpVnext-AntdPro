@@ -1,5 +1,5 @@
 import { UploadOutlined } from '@ant-design/icons';
-import '@ant-design/compatible/assets/index.css';
+// import '@ant-design/compatible/assets/index.css';
 import { Button, Input, Upload, Form } from 'antd';
 import React, { Component, Fragment } from 'react';
 import { Dispatch } from 'redux';
@@ -11,11 +11,9 @@ const FormItem = Form.Item;
 // 头像组件 方便以后独立，增加裁剪之类的功能
 const AvatarView = () => (
   <Fragment>
-    <div className={styles.avatar_title}>
-      Logo
-    </div>
+    <div className={styles.avatar_title}>Logo</div>
     <div className={styles.avatar}>
-      <img src='https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png' alt="avatar" />
+      <img src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" alt="avatar" />
     </div>
     <Upload showUploadList={false}>
       <div className={styles.button_view}>
@@ -28,9 +26,8 @@ const AvatarView = () => (
   </Fragment>
 );
 
-
 interface ChangePasswordViewViewProps {
-  dispatch:Dispatch
+  dispatch: Dispatch;
 }
 
 class ChangePasswordView extends Component<ChangePasswordViewViewProps> {
@@ -41,11 +38,11 @@ class ChangePasswordView extends Component<ChangePasswordViewViewProps> {
   };
 
   onFinish = (values: any) => {
-    const { dispatch } =this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type:'accountSettings/changePassword',
-      payload:values,
-    })
+      type: 'accountSettings/changePassword',
+      payload: values,
+    });
   };
 
   render() {
@@ -53,26 +50,34 @@ class ChangePasswordView extends Component<ChangePasswordViewViewProps> {
       <div className={styles.baseView} ref={this.getViewDom}>
         <div className={styles.left}>
           <Form layout="vertical" hideRequiredMark onFinish={this.onFinish}>
-            <Form.Item label='当前密码' name="currentPassword"
+            <Form.Item
+              label="当前密码"
+              name="currentPassword"
               rules={[
                 {
                   required: true,
                   message: '当前密码不能为空!',
                 },
-              ]}>
-              <Input type='password' />
+              ]}
+            >
+              <Input type="password" />
             </Form.Item>
-            <FormItem label='新密码' hasFeedback name='newPassword'
+            <FormItem
+              label="新密码"
+              hasFeedback
+              name="newPassword"
               rules={[
                 {
                   required: true,
                   message: '新密码不能为空！',
                 },
-              ]} >
-              <Input type='password' />
+              ]}
+            >
+              <Input type="password" />
             </FormItem>
-            <FormItem label='确认密码'
-              name='confirmPassword'
+            <FormItem
+              label="确认密码"
+              name="confirmPassword"
               dependencies={['newPassword']}
               hasFeedback
               rules={[
@@ -89,13 +94,14 @@ class ChangePasswordView extends Component<ChangePasswordViewViewProps> {
                     return Promise.reject('两次密码输入不一致!');
                   },
                 }),
-              ]} >
-              <Input type='password' />
+              ]}
+            >
+              <Input type="password" />
             </FormItem>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 保存设置
-            </Button>
+              </Button>
             </Form.Item>
           </Form>
         </div>
