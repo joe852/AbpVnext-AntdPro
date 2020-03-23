@@ -75,7 +75,6 @@ if (isAntDesignProPreview) {
   ]);
   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
-
 export default {
   plugins,
   hash: true,

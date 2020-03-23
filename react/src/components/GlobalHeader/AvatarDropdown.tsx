@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { ConnectProps, ConnectState } from '@/models/connect';
 import { ApplicationConfiguration } from '@/models/global';
-import {history} from 'umi'
+import { router } from 'umi'
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -27,17 +27,17 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
         });
       }
     } else if (key === 'settings') {
-      history.push('/accountsettings')
+      router.push('/accountsettings')
     }
     else if (key === 'center') {
-       message.info('开发中。。。')
+      message.info('开发中。。。')
     }
   };
 
   render(): React.ReactNode {
     const {
       currentUser,
-      menu=true,
+      menu = true,
     } = this.props;
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
@@ -69,14 +69,14 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
         </span>
       </HeaderDropdown>
     ) : (
-      <Spin
-        size="small"
-        style={{
-          marginLeft: 8,
-          marginRight: 8,
-        }}
-      />
-    );
+        <Spin
+          size="small"
+          style={{
+            marginLeft: 8,
+            marginRight: 8,
+          }}
+        />
+      );
   }
 }
 

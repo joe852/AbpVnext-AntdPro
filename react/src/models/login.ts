@@ -5,7 +5,7 @@ import { router } from 'umi';
 import { login, logout } from '@/services/login';
 import { getPageQuery } from '@/utils/utils';
 import AppConsts from "../utils/appconst";
-import Store from './../utils/store';
+import Store from "../utils/store";
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -45,9 +45,6 @@ const Model: LoginModelType = {
       yield put({
         type: 'changeLoginStatus',
         payload: response,
-      });
-      yield put({
-        type: 'global/getApplicationConfiguration',
       });
       // Login successfully
       if (response.access_token !== undefined) {

@@ -152,7 +152,6 @@ const GlobalModel: GlobalModelType = {
 
   reducers: {
     saveConfigiration(state = { notices: [], collapsed: true }, { payload }): GlobalModelState {
-      console.log(_.keys(payload.auth.grantedPolicies))
       setAuthority(_.keys(payload.auth.grantedPolicies));
       return {
         ...state,

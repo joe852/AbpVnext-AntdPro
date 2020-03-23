@@ -14,3 +14,10 @@ export interface IdentityRoleDto{
   concurrencyStamp:string;
   id:string;
 }
+
+export interface IdentityRoleUpdateDto{
+  name:string;
+  isDefault:boolean;
+  isPublic:boolean;
+  concurrencyStamp:string;
+}

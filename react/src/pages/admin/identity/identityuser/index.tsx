@@ -7,7 +7,6 @@ import { Button, Dropdown, Menu, Modal } from 'antd';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
-
 import check from '@/components/Authorized/CheckPermissions';
 import Permissions from '@/utils/permissions';
 import PermissionManagement from '@/components/PermissionsManagement';
