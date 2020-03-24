@@ -42,7 +42,7 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
 
   return (
     <Modal
-      title={formValues?.id===undefined?'新增用户':`编辑用户:${formValues.name}`}
+      title={formValues?.id === undefined ? '新增用户' : `编辑用户:${formValues.name}`}
       onCancel={onCancel}
       destroyOnClose
       footer={null}
@@ -67,13 +67,13 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
               <Input placeholder="请输入" />
             </Form.Item>
             {
-              formValues?.id===undefined?(       <Form.Item  name="password" label="密码"
-              rules={[{
-                required: true,
-                message: '密码不能为空！',
-              }]} required>
-              <Input type="password" placeholder="请输入" />
-            </Form.Item>):null
+              formValues?.id === undefined ? (<Form.Item name="password" label="密码"
+                rules={[{
+                  required: true,
+                  message: '密码不能为空！',
+                }]} required>
+                <Input type="password" placeholder="请输入" />
+              </Form.Item>) : null
             }
             <Form.Item name="email" label="邮箱地址" rules={[{
               required: true,
@@ -101,6 +101,9 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
           </TabPane>
         </Tabs>
         <Form.Item style={{ textAlign: 'right' }}>
+          <Button onClick={onCancel} style={{ marginRight: 8 }} type="default" >
+            取消
+         </Button>
           <Button type="primary" htmlType="submit">
             提交
         </Button>

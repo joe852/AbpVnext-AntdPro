@@ -60,12 +60,13 @@ const request = extend({
 // request拦截器, 添加token
 request.interceptors.request.use((url, options) => {
   const token = Store.GetToken();
+  const language = Store.GetLanguage();
   if (token) {
     options = {
       ...options,
       headers: {
         ...options.headers,
-        "Accept-Language":"zh-Hans",
+        "Accept-Language":language===null?"zh-Hans":language,
         Authorization: `Bearer ${token}`,
       },
     }

@@ -15,7 +15,7 @@
     <PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Domain.Shared" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Shared" Version="2.3.0" />
-    <PackageReference Include="Tudou.Abp.SettingManagement.Domain.Shared" Version="2.3.0" />
+    <PackageReference Include="Tudou.Abp.SettingManagement.Domain.Shared" Version="2.3.0.1" />
 
   </ItemGroup>
 

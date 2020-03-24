@@ -1,4 +1,4 @@
-import { Modal, Form, Input, Checkbox, message } from 'antd';
+import { Modal, Form, Input, Checkbox, message, Button } from 'antd';
 import React from 'react';
 import { useRequest } from '@umijs/hooks';
 import { IdentityRoleDto } from '../data';
@@ -11,7 +11,6 @@ interface CreateOrUpdateFormProps {
 }
 const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
   const { visible, onCancel, editRole } = props;
-  const [form] = Form.useForm();
   const { run: create } = useRequest(createRole, {
     manual: true,
     onSuccess: async () => {
@@ -24,21 +23,17 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
       message.success("保存成功!")
     }
   })
-  const handleOk = () => {
-    form.validateFields().then(values => {
-      if (editRole) {
-        update(editRole.id,{...values as any,concurrencyStamp:editRole.concurrencyStamp});
-      } else {
-        create(values as any)
-      }
-    });
-    form.resetFields();
+  const formFinish = (values: any) => {
+    if (editRole) {
+      update(editRole.id, { ...values as any, concurrencyStamp: editRole.concurrencyStamp });
+    } else {
+      create(values as any)
+    }
     onCancel();
   }
-  form.setFieldsValue(editRole?editRole!:{})
   return (
-    <Modal onOk={handleOk} destroyOnClose title={editRole ? "编辑角色" : "新增角色"} onCancel={onCancel} visible={visible}>
-      <Form name="role-form"  form={form}   layout="vertical" >
+    <Modal footer={null} destroyOnClose onCancel={onCancel} title={editRole ? "编辑角色" : "新增角色"} visible={visible}>
+      <Form name="role-form" onFinish={formFinish} initialValues={editRole} layout="vertical" >
         <Form.Item name="name" label="名称"
           rules={[{
             required: true,
@@ -51,6 +46,14 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
         </Form.Item>
         <Form.Item valuePropName="checked" name="isPublic" >
           <Checkbox>公开</Checkbox>
+        </Form.Item>
+        <Form.Item style={{ textAlign: 'right' }}>
+          <Button onClick={onCancel} style={{marginRight:8}} type="default" >
+            取消
+          </Button>
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
         </Form.Item>
       </Form>
     </Modal>

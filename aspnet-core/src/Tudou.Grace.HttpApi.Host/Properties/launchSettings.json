@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "https://localhost:44337",
-      "sslPort": 44337
+      "sslPort": 44392
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "Tudou.Grace.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44394",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:44392"
     }
   }
 }

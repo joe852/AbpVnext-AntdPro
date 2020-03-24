@@ -1,6 +1,6 @@
 import { GlobalOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { getLocale, setLocale } from 'umi-plugin-react/locale';
+import { getLocale } from 'umi-plugin-react/locale';
 import { ClickParam } from 'antd/es/menu';
 import React from 'react';
 import classNames from 'classnames';
@@ -9,6 +9,7 @@ import { connect } from 'dva';
 import { ApplicationConfiguration } from '@/models/global';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import Store from "../../utils/store";
 
 interface SelectLangProps {
   className?: string;
@@ -19,8 +20,10 @@ const SelectLang: React.FC<SelectLangProps> = props => {
   const { className, localization } = props;
   const selectedLang = getLocale();
 
-  const changeLang = ({ key }: ClickParam): void => setLocale(key);
-
+  const changeLang = ({ key }: ClickParam): void => {
+    Store.SetLanguage(key);
+    window.location.reload();
+  };
 
   const langMenu = (
     <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={changeLang}>
