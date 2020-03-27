@@ -120,13 +120,13 @@ export default {
                 {
                   path: '/admin/saas',
                   name: 'Saas',
-                  authority: ['Saas.Tenants,Saas.Editions'],
+                  authority: ['AbpTenantManagement.Tenants'],
                   icon: 'idcard',
                   routes: [
                     {
                       path: '/admin/saas/tenants',
                       name: '租户',
-                      authority: ['Saas.Tenants'],
+                      authority: ['AbpTenantManagement.Tenants'],
                       icon: 'user',
                       component: './admin/saas/tenants',
                     },
