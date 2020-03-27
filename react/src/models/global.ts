@@ -1,5 +1,6 @@
+
 import { Reducer } from 'redux';
-import { Subscription, Effect } from 'dva';
+import { Effect, Subscription } from 'dva';
 import _ from "lodash";
 import { NoticeIconData } from '@/components/NoticeIcon';
 import { getConfiguration } from '@/services/global';
@@ -14,6 +15,8 @@ export namespace ApplicationConfiguration {
     setting: Value;
     currentUser: CurrentUser;
     features: Value;
+    multiTenancy:MultiTenancy;
+    currentTenant:CurrentTenant;
   }
 
   export interface Localization {
@@ -48,11 +51,19 @@ export namespace ApplicationConfiguration {
   export interface Dictionary<T = any> {
     [key: string]: T;
   }
+  export interface MultiTenancy{
+    isEnabled:boolean;
+  }
   export interface CurrentUser {
     isAuthenticated: boolean;
     id: string;
     tenantId: string;
     userName: string;
+  }
+  export interface CurrentTenant {
+    id: string;
+    name: string;
+    isAvailable: boolean;
   }
 }
 

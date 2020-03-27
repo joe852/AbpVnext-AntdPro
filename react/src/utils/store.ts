@@ -3,6 +3,8 @@
 class Store {
   static tokenName: string = "token";
 
+  static tenantId: string = "tenantId";
+
   static languageName: string = "language";
 
   static SetToken(value: string) {
@@ -11,6 +13,14 @@ class Store {
 
   static GetToken(): string | null {
     return this.LocalStorageGetItem(this.tokenName)
+  }
+
+  static SetTenantId(value: string) {
+    this.LocalStorageSetItem(this.tenantId, value)
+  }
+
+  static GetTenantId() {
+    return this.LocalStorageGetItem(this.tenantId)
   }
 
   static SetLanguage(value: string) {

@@ -118,6 +118,21 @@ export default {
               icon: 'tool',
               routes: [
                 {
+                  path: '/admin/saas',
+                  name: 'Saas',
+                  authority: ['Saas.Tenants,Saas.Editions'],
+                  icon: 'idcard',
+                  routes: [
+                    {
+                      path: '/admin/saas/tenants',
+                      name: '租户',
+                      authority: ['Saas.Tenants'],
+                      icon: 'user',
+                      component: './admin/saas/tenants',
+                    },
+                  ],
+                },
+                {
                   path: '/admin/identity',
                   name: '身份管理',
                   authority: ['AbpIdentity.Roles', 'AbpIdentity.Users'],
@@ -142,6 +157,7 @@ export default {
                 {
                   path: '/admin/auditlogging',
                   name: '审计日志',
+
                   icon: 'schedule',
                   component: './admin/auditlog',
                 },

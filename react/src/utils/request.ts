@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
@@ -61,6 +62,7 @@ const request = extend({
 request.interceptors.request.use((url, options) => {
   const token = Store.GetToken();
   const language = Store.GetLanguage();
+  const tenantId= Store.GetTenantId();
   if (token) {
     options = {
       ...options,
@@ -68,6 +70,15 @@ request.interceptors.request.use((url, options) => {
         ...options.headers,
         "Accept-Language":language===null?"zh-Hans":language,
         Authorization: `Bearer ${token}`,
+      },
+    }
+  }
+  if(tenantId){
+    options = {
+      ...options,
+      headers: {
+        ...options.headers,
+        __tenant: tenantId
       },
     }
   }

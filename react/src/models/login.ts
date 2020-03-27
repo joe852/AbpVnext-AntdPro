@@ -69,8 +69,9 @@ const Model: LoginModelType = {
     },
     *logout(_, { call }) {
       const { redirect } = getPageQuery();
+      Store.Clear();
       // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
+      if (window.location.pathname !== '/account/login' && !redirect) {
         yield call(logout);
         router.replace({
           pathname: '/account/login',

@@ -10,11 +10,14 @@ import { ConnectState } from '@/models/connect';
 
 import LoginFrom from './components/Login';
 import styles from './style.less';
+import TenantsSelect from '@/components/TenantsSelect';
+import { ApplicationConfiguration } from '@/models/global';
 
 const { Tab, UserName, Password, Submit } = LoginFrom;
 interface LoginProps {
   dispatch: Dispatch<AnyAction>;
   userLogin: StateType;
+  multiTenancy?: ApplicationConfiguration.MultiTenancy;
   submitting?: boolean;
 }
 
@@ -32,7 +35,7 @@ const LoginMessage: React.FC<{
 );
 
 const Login: React.FC<LoginProps> = props => {
-  const { userLogin = {}, submitting } = props;
+  const { userLogin = {}, submitting, multiTenancy } = props;
   const { status } = userLogin;
   const [autoLogin, setAutoLogin] = useState(true);
 
@@ -48,12 +51,14 @@ const Login: React.FC<LoginProps> = props => {
 
   return (
     <div className={styles.main}>
+      {
+        multiTenancy?.isEnabled ? <TenantsSelect /> : null
+      }
       <LoginFrom activeKey='account' onSubmit={handleSubmit}>
         <Tab key="account" tab="账户密码登录">
           {status === 'error' && !submitting && (
             <LoginMessage content="账户或密码错误（admin/ant.design）" />
           )}
-
           <UserName
             name="userNameOrEmailAddress"
             placeholder="用户名或邮箱"
@@ -98,7 +103,8 @@ const Login: React.FC<LoginProps> = props => {
   );
 };
 
-export default connect(({ login, loading }: ConnectState) => ({
+export default connect(({ global, login, loading }: ConnectState) => ({
+  multiTenancy: global.applicationConfiguration?.multiTenancy,
   userLogin: login,
   submitting: loading.effects['login/login'],
 }))(Login);

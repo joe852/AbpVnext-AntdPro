@@ -1,6 +1,5 @@
-import { AnyAction } from 'redux';
+
 import { MenuDataItem } from '@ant-design/pro-layout';
-import { RouterTypes } from 'umi';
 import { GlobalModelState } from './global';
 import { StateType } from './login';
 import { AccountSettingsModalState } from "../pages/common/AccountSettings/model";
@@ -42,7 +41,6 @@ export interface ConnectState {
 export interface Route extends MenuDataItem {
   routes?: Route[];
 }
-
 /**
  * @type T: Params matched in dynamic routing
  */
