@@ -5,7 +5,8 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
-using Volo.Abp.TenantManagement;
+using Tudou.Abp.Saas;
+
 
 namespace Tudou.Grace
 {
@@ -15,7 +16,7 @@ namespace Tudou.Grace
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpAuditLoggingHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
-        typeof(AbpTenantManagementHttpApiModule),
+        typeof(AbpSaasHttpApiModule),
         typeof(AbpSettingManagementHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
         )]

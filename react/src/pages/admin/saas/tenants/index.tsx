@@ -5,10 +5,12 @@ import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { PlusOutlined, SettingOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, message } from 'antd';
 import { useRequest } from '@umijs/hooks';
-import { SaasTenantDto, TenantUpdateDto } from './data';
+import { SaasTenantDto } from './data';
 import { queryTenants, deleteTenant } from './service';
 import CreateForm from './components/createForm';
 import EditForm from './components/editForm';
+import { SaasEditionDto } from "../editions/data.d";
+import { queryEditions } from '../editions/service';
 
 
 
@@ -16,8 +18,15 @@ const Tenants: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
   const [editModalVisible, handleEditModalVisible] = useState<boolean>(false);
-  const [editTenant, setEditTenant] = useState<TenantUpdateDto|null>(null);
+  const [editTenant, setEditTenant] = useState<SaasTenantDto | null>(null);
+  const [editionOptions, setEditionOptions] = useState<SaasEditionDto[]>([]);
 
+  const { run: doGetEditions } = useRequest(queryEditions, {
+    manual: true,
+    onSuccess: (result) => {
+      setEditionOptions(result.items);
+    }
+  });
   const reloadTable = () => {
     actionRef.current!.reload();
   }
@@ -29,14 +38,15 @@ const Tenants: React.FC = () => {
     }
   });
 
-  const handleEditTenant=async (item:SaasTenantDto)=>{
-   await setEditTenant({
-      name:item.name,
-      id:item.id,
-    })
+  const handleEditTenant = async (item: SaasTenantDto) => {
+    await doGetEditions();
+    await setEditTenant(item)
     await handleEditModalVisible(true)
   }
-
+  const handleOpenCreateModal=async()=>{
+    await doGetEditions();
+    await handleCreateModalVisible(true);
+  }
   const columns: ProColumns<SaasTenantDto>[] = [
     {
       title: '操作',
@@ -46,7 +56,7 @@ const Tenants: React.FC = () => {
             <Menu
               selectedKeys={[]}
             >
-              <Menu.Item onClick={() => handleEditTenant(record!) } key="edit">编辑</Menu.Item>
+              <Menu.Item onClick={() => handleEditTenant(record!)} key="edit">编辑</Menu.Item>
               <Menu.Item onClick={() => doDeleteTenant(record.id)} key="delete">删除</Menu.Item>
             </Menu>
           }
@@ -59,17 +69,21 @@ const Tenants: React.FC = () => {
     {
       title: '租户名称',
       dataIndex: 'name',
+    },
+    {
+      title: '版本名称',
+      dataIndex: 'editionName',
     }
   ]
   return (
     <PageHeaderWrapper>
       <ProTable<SaasTenantDto>
-        headerTitle="用户信息"
+        headerTitle="租户信息"
         actionRef={actionRef}
         search={false}
         rowKey="id"
         toolBarRender={() => [
-          <Button icon={<PlusOutlined />} onClick={() => handleCreateModalVisible(true)} type="primary" >
+          <Button icon={<PlusOutlined />} onClick={() => handleOpenCreateModal()} type="primary" >
             新建
           </Button>
         ]}
@@ -86,10 +100,12 @@ const Tenants: React.FC = () => {
         columns={columns}
       />
       <CreateForm
+        editionOptions={editionOptions}
         visible={createModalVisible}
         onCancel={() => handleCreateModalVisible(false)}
         onSubmit={() => reloadTable()} />
       <EditForm
+        editionOptions={editionOptions}
         visible={editModalVisible}
         onCancel={() => handleEditModalVisible(false)}
         onSubmit={() => reloadTable()}

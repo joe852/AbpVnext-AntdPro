@@ -100,18 +100,6 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = props => {
   }
   return (
     <div className={styles.main}>
-      {/* <Body
-      //   title="标题"
-      // >
-      //   <Form form={form} initialValues={{title:settings.title}}>
-      //     <Form.Item name="title" required rules={[{
-      //       required:true,
-      //       message:"标题不能为空！"
-      //     }]}>
-      //       <Input  style={{ width: 200 }} />
-      //     </Form.Item>
-      //   </Form>
-      // </Body> */}
       <Body
         title="整体风格设置"
       >

@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Tudou.Abp.Saas.HttpApi.Client" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.Account.HttpApi.Client" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="2.3.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="2.3.0" />
     <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="2.3.0" />
     <PackageReference Include="Tudou.Abp.SettingManagement.HttpApi.Client" Version="2.3.0.1" />
     <PackageReference Include="Tudou.Abp.AuditLogging.HttpApi.Client" Version="2.3.0" />

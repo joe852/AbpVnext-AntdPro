@@ -3,6 +3,8 @@ import { PageRequestDto } from '../../../../services/data.d';
 export interface SaasTenantDto {
   id: string;
   name: string;
+  editionName?:string;
+  editionId?:string;
 }
 
 export interface TenantQueryParams extends PageRequestDto {
@@ -17,6 +19,6 @@ export interface TenantCreateDto {
 }
 
 export interface TenantUpdateDto{
-  id:string;
   name:string;
+  editionId:string;
 }

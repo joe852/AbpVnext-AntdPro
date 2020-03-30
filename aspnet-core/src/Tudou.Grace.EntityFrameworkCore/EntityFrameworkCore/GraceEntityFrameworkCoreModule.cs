@@ -9,7 +9,7 @@ using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Tudou.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Tudou.Abp.Saas.EntityFrameworkCore;
 
 namespace Tudou.Grace.EntityFrameworkCore
 {
@@ -22,7 +22,7 @@ namespace Tudou.Grace.EntityFrameworkCore
        typeof(AbpEntityFrameworkCoreSqlServerModule),
        typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
        typeof(AbpAuditLoggingEntityFrameworkCoreModule),
-       typeof(AbpTenantManagementEntityFrameworkCoreModule),
+       typeof(AbpSaasEntityFrameworkCoreModule),
        typeof(AbpFeatureManagementEntityFrameworkCoreModule)
        )]
     public class GraceEntityFrameworkCoreModule : AbpModule

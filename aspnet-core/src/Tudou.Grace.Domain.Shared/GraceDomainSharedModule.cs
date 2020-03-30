@@ -8,7 +8,7 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Tudou.Abp.SettingManagement;
-using Volo.Abp.TenantManagement;
+using Tudou.Abp.Saas;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
@@ -22,7 +22,7 @@ namespace Tudou.Grace
         typeof(AbpIdentityServerDomainSharedModule),
         typeof(AbpPermissionManagementDomainSharedModule),
         typeof(AbpSettingManagementDomainSharedModule),
-        typeof(AbpTenantManagementDomainSharedModule)
+        typeof(AbpSaasDomainSharedModule)
         )]
     public class GraceDomainSharedModule : AbpModule
     {

@@ -1,17 +1,19 @@
 import React from "react"
-import { Modal, Form, Input, message } from "antd"
+import { Modal, Form, Input, message, Select } from "antd"
 import { useRequest } from '@umijs/hooks';
 import { createTenant } from "../service";
 import { TenantCreateDto } from "../data.d";
+import { SaasEditionDto } from "../../editions/data.d";
 
 interface CreateFormProps {
   visible: boolean;
+  editionOptions: SaasEditionDto[];
   onCancel: () => void;
   onSubmit: () => void;
 }
-
+const { Option } = Select;
 const CreateForm: React.FC<CreateFormProps> = props => {
-  const { visible, onCancel, onSubmit } = props;
+  const { visible, onCancel, onSubmit, editionOptions } = props;
   const [form] = Form.useForm();
   const { run: doCreateTenant } = useRequest(createTenant, {
     manual: true,
@@ -44,9 +46,9 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           rules={[{
             required: true,
             message: "管理员邮箱地址不能为空!"
-          },{
-            type:'email',
-            message:"请输入正确格式的邮箱地址！",
+          }, {
+            type: 'email',
+            message: "请输入正确格式的邮箱地址！",
           }]}>
           <Input />
         </Form.Item>
@@ -58,6 +60,16 @@ const CreateForm: React.FC<CreateFormProps> = props => {
             message: "管理员密码不能为空!"
           }]}>
           <Input type="password" />
+        </Form.Item>
+        <Form.Item
+          label="版本"
+          valuePropName="selected"
+          name="editionId">
+          <Select>
+            {
+              editionOptions.map(item => <Option value={item.id}>{item.displayName}</Option>)
+            }
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

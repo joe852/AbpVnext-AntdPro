@@ -5,7 +5,8 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.TenantManagement;
+using Tudou.Abp.Saas;
+
 
 namespace Tudou.Grace
 {
@@ -17,7 +18,7 @@ namespace Tudou.Grace
         typeof(AbpIdentityApplicationContractsModule),
         typeof(AbpPermissionManagementApplicationContractsModule),
         typeof(AbpSettingManagementApplicationContractsModule),
-        typeof(AbpTenantManagementApplicationContractsModule)
+        typeof(AbpSaasApplicationContractsModule)
     )]
     public class GraceApplicationContractsModule : AbpModule
     {

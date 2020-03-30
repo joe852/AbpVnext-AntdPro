@@ -9,7 +9,8 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
 using Tudou.Abp.SettingManagement;
-using Volo.Abp.TenantManagement;
+using Tudou.Abp.Saas;
+
 
 namespace Tudou.Grace
 {
@@ -23,7 +24,7 @@ namespace Tudou.Grace
         typeof(AbpIdentityServerDomainModule),
         typeof(AbpPermissionManagementDomainIdentityServerModule),
         typeof(AbpSettingManagementDomainModule),
-        typeof(AbpTenantManagementDomainModule)
+        typeof(AbpSaasDomainModule)
         )]
     public class GraceDomainModule : AbpModule
     {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.TenantManagement;
+using Tudou.Abp.Saas;
 
 namespace Tudou.Grace.Data
 {
@@ -15,13 +15,13 @@ namespace Tudou.Grace.Data
 
         private readonly IDataSeeder _dataSeeder;
         private readonly IEnumerable<IGraceDbSchemaMigrator> _dbSchemaMigrators;
-        private readonly ITenantRepository _tenantRepository;
+        private readonly ISaasTenantRepository _tenantRepository;
         private readonly ICurrentTenant _currentTenant;
 
         public GraceDbMigrationService(
             IDataSeeder dataSeeder,
             IEnumerable<IGraceDbSchemaMigrator> dbSchemaMigrators,
-            ITenantRepository tenantRepository,
+            ISaasTenantRepository tenantRepository,
             ICurrentTenant currentTenant)
         {
             _dataSeeder = dataSeeder;
@@ -70,7 +70,7 @@ namespace Tudou.Grace.Data
             Logger.LogInformation("Successfully completed host database migrations.");
         }
 
-        private async Task MigrateTenantDatabasesAsync(Tenant tenant)
+        private async Task MigrateTenantDatabasesAsync(SaasTenant tenant)
         {
             Logger.LogInformation($"Migrating schema for {tenant.Name} database...");
 

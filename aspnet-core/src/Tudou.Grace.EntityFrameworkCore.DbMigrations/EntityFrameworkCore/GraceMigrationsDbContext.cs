@@ -8,7 +8,7 @@ using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Tudou.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Tudou.Abp.Saas.EntityFrameworkCore;
 
 namespace Tudou.Grace.EntityFrameworkCore
 {
@@ -38,7 +38,7 @@ namespace Tudou.Grace.EntityFrameworkCore
             builder.ConfigureIdentity();
             builder.ConfigureIdentityServer();
             builder.ConfigureFeatureManagement();
-            builder.ConfigureTenantManagement();
+            builder.ConfigureSaasManagement();
 
             /* Configure customizations for entities from the modules included  */
 

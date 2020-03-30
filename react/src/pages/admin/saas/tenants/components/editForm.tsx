@@ -1,19 +1,22 @@
-import { Modal, Form, Input, message } from "antd";
+import { Modal, Form, Input, message, Select } from "antd";
 import React from "react";
 import { useRequest } from "@umijs/hooks";
-import { TenantUpdateDto } from "../data";
+import { SaasTenantDto } from "../data";
 import { updateTenant } from "../service";
+import { SaasEditionDto } from "../../editions/data";
 
+const { Option } = Select;
 interface EditFormProps {
   visible: boolean;
   onCancel: () => void;
   onSubmit: () => void;
-  editTenant: TenantUpdateDto;
+  editionOptions: SaasEditionDto[];
+  editTenant: SaasTenantDto;
 }
 const EditForm: React.FC<EditFormProps> = props => {
-  const { visible, onCancel, onSubmit, editTenant } = props;
+  const { visible, onCancel, onSubmit, editTenant, editionOptions } = props;
   const [form] = Form.useForm();
-  const { run: doEditTenant } = useRequest(updateTenant, {
+  const { run: doUpdateTenant } = useRequest(updateTenant, {
     manual: true,
     onSuccess: () => {
       message.success("操作成功！");
@@ -24,9 +27,9 @@ const EditForm: React.FC<EditFormProps> = props => {
   const handleOk = () => {
     form.validateFields().then(values => {
       form.resetFields();
-      doEditTenant({
-        id: editTenant?.id,
-        name:values.name,
+      doUpdateTenant(editTenant?.id,{
+        name: values.name,
+        editionId:values.editionId
       })
     })
   }
@@ -41,6 +44,15 @@ const EditForm: React.FC<EditFormProps> = props => {
             message: "租户名称不能为空!"
           }]}>
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="版本"
+          name="editionId">
+          <Select>
+            {
+              editionOptions.map(item => <Option key={item.id} value={item.id}>{item.displayName}</Option>)
+            }
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

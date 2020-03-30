@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Tudou.Grace.Migrations
 {
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -130,22 +130,7 @@ namespace Tudou.Grace.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpSettings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value = table.Column<string>(maxLength: 2048, nullable: false),
-                    ProviderName = table.Column<string>(maxLength: 64, nullable: true),
-                    ProviderKey = table.Column<string>(maxLength: 64, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbpSettings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AbpTenants",
+                name: "AbpSaasEditions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -158,11 +143,26 @@ namespace Tudou.Grace.Migrations
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     DeleterId = table.Column<Guid>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 64, nullable: false)
+                    DisplayName = table.Column<string>(maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AbpTenants", x => x.Id);
+                    table.PrimaryKey("PK_AbpSaasEditions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AbpSettings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    Value = table.Column<string>(maxLength: 2048, nullable: false),
+                    ProviderName = table.Column<string>(maxLength: 64, nullable: true),
+                    ProviderKey = table.Column<string>(maxLength: 64, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -424,22 +424,31 @@ namespace Tudou.Grace.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbpTenantConnectionStrings",
+                name: "AbpSaasTenants",
                 columns: table => new
                 {
-                    TenantId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(maxLength: 64, nullable: false),
-                    Value = table.Column<string>(maxLength: 1024, nullable: false)
+                    EditionId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AbpTenantConnectionStrings", x => new { x.TenantId, x.Name });
+                    table.PrimaryKey("PK_AbpSaasTenants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpTenantConnectionStrings_AbpTenants_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "AbpTenants",
+                        name: "FK_AbpSaasTenants_AbpSaasEditions_EditionId",
+                        column: x => x.EditionId,
+                        principalTable: "AbpSaasEditions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -801,6 +810,25 @@ namespace Tudou.Grace.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AbpSaasTenantConnectionStrings",
+                columns: table => new
+                {
+                    TenantId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 64, nullable: false),
+                    Value = table.Column<string>(maxLength: 1024, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpSaasTenantConnectionStrings", x => new { x.TenantId, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AbpSaasTenantConnectionStrings_AbpSaasTenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "AbpSaasTenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityServerApiScopeClaims",
                 columns: table => new
                 {
@@ -880,14 +908,24 @@ namespace Tudou.Grace.Migrations
                 column: "NormalizedName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AbpSaasEditions_DisplayName",
+                table: "AbpSaasEditions",
+                column: "DisplayName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbpSaasTenants_EditionId",
+                table: "AbpSaasTenants",
+                column: "EditionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbpSaasTenants_Name",
+                table: "AbpSaasTenants",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AbpSettings_Name_ProviderName_ProviderKey",
                 table: "AbpSettings",
                 columns: new[] { "Name", "ProviderName", "ProviderKey" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AbpTenants_Name",
-                table: "AbpTenants",
-                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AbpUserClaims_UserId",
@@ -981,10 +1019,10 @@ namespace Tudou.Grace.Migrations
                 name: "AbpRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AbpSettings");
+                name: "AbpSaasTenantConnectionStrings");
 
             migrationBuilder.DropTable(
-                name: "AbpTenantConnectionStrings");
+                name: "AbpSettings");
 
             migrationBuilder.DropTable(
                 name: "AbpUserClaims");
@@ -1047,7 +1085,7 @@ namespace Tudou.Grace.Migrations
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
-                name: "AbpTenants");
+                name: "AbpSaasTenants");
 
             migrationBuilder.DropTable(
                 name: "AbpRoles");
@@ -1066,6 +1104,9 @@ namespace Tudou.Grace.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "AbpSaasEditions");
 
             migrationBuilder.DropTable(
                 name: "IdentityServerApiResources");
