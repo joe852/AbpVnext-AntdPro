@@ -5,3 +5,10 @@ export async function getConfiguration() {
     method: 'GET',
   });
 }
+
+
+export async function abpApiDefinition() {
+  return request('api/abp/api-definition', {
+    method: 'GET',
+  });
+}

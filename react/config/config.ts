@@ -127,14 +127,14 @@ export default {
                       path: '/admin/saas/tenants',
                       name: '租户',
                       authority: ['AbpSaas.Tenants'],
-                      icon: 'user',
+                      icon: 'schedule',
                       component: './admin/saas/tenants',
                     },
                     {
                       path: '/admin/saas/editions',
                       name: '版本',
                       authority: ['AbpSaas.Editions'],
-                      icon: 'user',
+                      icon: 'cloud',
                       component: './admin/saas/editions',
                     },
                   ],
@@ -165,7 +165,7 @@ export default {
                   path: '/admin/auditlogging',
                   name: '审计日志',
 
-                  icon: 'schedule',
+                  icon: 'audit',
                   component: './admin/auditlog',
                 },
                 {
@@ -211,7 +211,7 @@ export default {
     'process.env.REACT_APP_Scope': process.env.REACT_APP_Scope,
     REACT_APP_ENV: REACT_APP_ENV || false,
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
-      ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
+    ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {

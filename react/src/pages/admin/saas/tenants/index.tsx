@@ -13,12 +13,13 @@ import { SaasEditionDto } from "../editions/data.d";
 import { queryEditions } from '../editions/service';
 
 
+const initTenantEmpty:SaasTenantDto={id:"",name:"",editionId:"",editionName:""}
 
 const Tenants: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
   const [editModalVisible, handleEditModalVisible] = useState<boolean>(false);
-  const [editTenant, setEditTenant] = useState<SaasTenantDto | null>(null);
+  const [editTenant, setEditTenant] = useState<SaasTenantDto>(initTenantEmpty);
   const [editionOptions, setEditionOptions] = useState<SaasEditionDto[]>([]);
 
   const { run: doGetEditions } = useRequest(queryEditions, {

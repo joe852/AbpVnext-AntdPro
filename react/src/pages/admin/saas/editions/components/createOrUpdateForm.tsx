@@ -50,9 +50,10 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
     form.resetFields();
     onCancel();
   }
+  form.setFieldsValue({...editEdition})
   return (
     <Modal destroyOnClose onOk={handleOk} title={title} visible={visible} onCancel={handleCancel}>
-      <Form form={form} layout="vertical" initialValues={editEdition} name="create_or_update_form">
+      <Form form={form} layout="vertical"  name="create_or_update_form">
         <Form.Item
           label="名称"
           name="displayName"

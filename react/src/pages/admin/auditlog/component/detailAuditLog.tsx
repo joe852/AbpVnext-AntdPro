@@ -57,69 +57,67 @@ const DetailAuditLog: React.FC<DetailAuditLogProps> = props => {
               <Descriptions.Item label="Http状态码"><Badge color={iconColor} text={auditlog!.httpStatusCode} /></Descriptions.Item>
               <Descriptions.Item label="Http方法"><Badge color={httpColor} text={auditlog!.httpMethod} /></Descriptions.Item>
               <Descriptions.Item label="客户端名称">
-              {auditlog!.clientName}
-          </Descriptions.Item>
+                {auditlog!.clientName}
+              </Descriptions.Item>
               <Descriptions.Item label="IP地址">{auditlog!.clientIpAddress}</Descriptions.Item>
 
-          <Descriptions.Item label="Url"  span={2}>{auditlog!.url}</Descriptions.Item>
+              <Descriptions.Item label="Url" span={2}>{auditlog!.url}</Descriptions.Item>
               <Descriptions.Item label="异常信息" span={3}>
-              {auditlog!.exceptions}
+                {auditlog!.exceptions}
               </Descriptions.Item>
               <Descriptions.Item label="用户名"> {auditlog!.userName}</Descriptions.Item>
               <Descriptions.Item label="操作时间"> {auditlog!.executionTime}</Descriptions.Item>
               <Descriptions.Item label="持续时长"> {auditlog!.executionDuration}</Descriptions.Item>
               <Descriptions.Item label="应用名称"> {auditlog!.applicationName}</Descriptions.Item>
               <Descriptions.Item label="关联Id" span={2}> {auditlog!.correlationId}</Descriptions.Item>
-              <Descriptions.Item  span={3} label="浏览器信息">
-              <Paragraph  ellipsis={{rows:3}}>{auditlog!.browserInfo}</Paragraph>
+              <Descriptions.Item span={3} label="浏览器信息">
+                <Paragraph ellipsis={{ rows: 3 }}>{auditlog!.browserInfo}</Paragraph>
               </Descriptions.Item>
-              <Descriptions.Item  span={3} label="额外的属性">
-              {JSON.stringify(auditlog!.extraProperties) === "{}" ? '{}': (
-                _.forEach(auditlog!.extraProperties,(value, key)=><p>{key}:{value}</p>)
-              )}
+              <Descriptions.Item span={3} label="额外的属性">
+                {JSON.stringify(auditlog!.extraProperties) === "{}" ? '{}' : (
+                  _.forEach(auditlog!.extraProperties, (value, key) => <p>{key}:{value}</p>)
+                )}
               </Descriptions.Item>
             </Descriptions>
           </TabPane>
           <TabPane tab='请求' key='action'>
-             {auditlog!.actions?.length===0 ? null: (
+            {auditlog!.actions?.length === 0 ? null : (
               <Collapse >
-              {auditlog!.actions?.map(item=>(
-                <Panel header={item.serviceName} key={item.id}>
-                <Descriptions title="" >
-                <Descriptions.Item label="持续时间" span={3}> {item.executionDuration}</Descriptions.Item>
-                <Descriptions.Item  span={3} label="额外属性">
-                {JSON.stringify(item.extraProperties) === "{}" ? 'null': (
-                  _.forEach(item.extraProperties,(value, key)=><p>{key}:{value}</p>)
-                )}
-                </Descriptions.Item>
-                </Descriptions>
-              </Panel>
-              ))}
-            </Collapse>)}
-        </TabPane>
+                {auditlog!.actions?.map(item => (
+                  <Panel header={item.serviceName} key={item.id}>
+                    <Descriptions title="" >
+                      <Descriptions.Item label="持续时间" span={3}> {item.executionDuration}</Descriptions.Item>
+                      <Descriptions.Item span={3} label="额外属性">
+                        {item.parameters}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Panel>
+                ))}
+              </Collapse>)}
+          </TabPane>
           <TabPane tab='实体更改' key='change'>
-          {auditlog!.entityChanges?.length === 0 ? '没有实体变更记录！': (
-            <Collapse >
-            {auditlog!.entityChanges?.map(item=>(
-              <Panel header={item.entityTypeFullName} key={item.id}>
-              <Descriptions title="" >
-              <Descriptions.Item label="更改时间" span={3}> {item.changeTime}</Descriptions.Item>
-              <Descriptions.Item  span={3} label="更改内容">
-              {item.propertyChanges.length === 0 ? 'null': (
-                _.forEach(item.propertyChanges,value=><p>{value.propertyName}:{value.originalValue} = &gt; {value.newValue}</p>)
-              )}
-              </Descriptions.Item>
-              <Descriptions.Item  span={3} label="额外属性">
-              {JSON.stringify(item.extraProperties) === "{}" ? 'null': (
-                _.forEach(item.extraProperties,(value, key)=><p>{key}:{value}</p>)
-              )}
-              </Descriptions.Item>
-              </Descriptions>
-            </Panel>
-            ))}
-            </Collapse>
-          )}
-      </TabPane>
+            {auditlog!.entityChanges?.length === 0 ? '没有实体变更记录！' : (
+              <Collapse >
+                {auditlog!.entityChanges?.map(item => (
+                  <Panel header={item.entityTypeFullName} key={item.id}>
+                    <Descriptions title="" >
+                      <Descriptions.Item label="更改时间" span={3}> {item.changeTime}</Descriptions.Item>
+                      <Descriptions.Item span={3} label="更改内容">
+                        {item.propertyChanges.length === 0 ? 'null' : (
+                          _.forEach(item.propertyChanges, value => <p>{value.propertyName}:{value.originalValue} = &gt; {value.newValue}</p>)
+                        )}
+                      </Descriptions.Item>
+                      <Descriptions.Item span={3} label="额外属性">
+                        {JSON.stringify(item.extraProperties) === "{}" ? 'null' : (
+                          _.forEach(item.extraProperties, (value, key) => <p>{key}:{value}</p>)
+                        )}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Panel>
+                ))}
+              </Collapse>
+            )}
+          </TabPane>
         </Tabs>
       </Skeleton>
     </Modal>

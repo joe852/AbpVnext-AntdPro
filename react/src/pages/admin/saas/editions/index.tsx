@@ -10,10 +10,12 @@ import { queryEditions, deleteEdition } from './service';
 import CreateOrUpdateForm from './components/createOrUpdateForm';
 
 
+const initEditionItem:SaasEditionDto={displayName:"",id:""};
+
 const Editions: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [createOrUpdateModalVisible, handleCreateOrUpdateModalVisible] = useState<boolean>(false);
-  const [editEdition, setEditEdition] = useState<SaasEditionDto|null>(null);
+  const [editEdition, setEditEdition] = useState<SaasEditionDto>(initEditionItem);
   const reloadTable = () => {
     actionRef.current!.reload();
   }
@@ -24,7 +26,7 @@ const Editions: React.FC = () => {
       reloadTable();
     }
   });
-  const handleOpenEditModal = async (item:SaasEditionDto|null)=>{
+  const handleOpenEditModal = async (item:SaasEditionDto)=>{
     await setEditEdition(item);
     // open modal
     await handleCreateOrUpdateModalVisible(true);
@@ -61,7 +63,7 @@ const Editions: React.FC = () => {
         search={false}
         rowKey="id"
         toolBarRender={() => [
-          <Button icon={<PlusOutlined />} onClick={()=>handleOpenEditModal(null)} type="primary" >
+          <Button icon={<PlusOutlined />} onClick={()=>handleOpenEditModal(initEditionItem)} type="primary" >
             新建
           </Button>
         ]}

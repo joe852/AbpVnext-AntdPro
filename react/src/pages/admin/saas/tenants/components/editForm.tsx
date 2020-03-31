@@ -27,15 +27,16 @@ const EditForm: React.FC<EditFormProps> = props => {
   const handleOk = () => {
     form.validateFields().then(values => {
       form.resetFields();
-      doUpdateTenant(editTenant?.id,{
+      doUpdateTenant(editTenant?.id, {
         name: values.name,
-        editionId:values.editionId
+        editionId: values.editionId
       })
     })
   }
+  form.setFieldsValue({...editTenant})
   return (
     <Modal onOk={handleOk} title="编辑租户" onCancel={onCancel} visible={visible}>
-      <Form form={form} layout="vertical" initialValues={editTenant} name="edit_tenant">
+      <Form form={form} layout="vertical"  name="edit_tenant">
         <Form.Item
           label="租户名称"
           name="name"
