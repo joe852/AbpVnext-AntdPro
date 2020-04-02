@@ -34,7 +34,7 @@ const CreateOrUpdateForm: React.FC<CreateOrUpdateFormProps> = props => {
   const handleOk = () => {
     form.validateFields().then(values => {
       form.resetFields();
-      if (editEdition !== null) {
+      if (editEdition.id !== "") {
         doUpdateEdition(
           editEdition?.id,
           values as EditionUpdateDto,

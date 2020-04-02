@@ -89,7 +89,7 @@ const Tenants: React.FC = () => {
           </Button>
         ]}
         request={async (params = {}) => {
-          const response = await queryTenants({ skipCount: params.current! - 1, maxResultCount: params.pageSize });
+          const response = await queryTenants({ skipCount: (params.current! - 1) * params.pageSize!, maxResultCount: params.pageSize });
           const data = response.items;
           return {
             data,

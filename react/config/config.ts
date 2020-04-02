@@ -159,6 +159,20 @@ export default {
                       icon: 'safety',
                       component: './admin/identity/identityrole',
                     },
+                    {
+                      path: '/admin/identity/identityclaimtype',
+                      name: '声明类型',
+                      authority: ['AbpIdentity.Roles'],
+                      icon: 'safety',
+                      component: './admin/identity/identityclaimtype',
+                    },
+                    {
+                      path: '/admin/identity/organizationunit',
+                      name: '组织机构',
+                      //authority: ['AbpIdentity.Organization'],
+                      icon: 'safety',
+                      component: './admin/identity/organizationunit',
+                    },
                   ],
                 },
                 {

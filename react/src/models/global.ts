@@ -3,10 +3,11 @@ import { Reducer } from 'redux';
 import { Effect, Subscription } from 'dva';
 import _ from "lodash";
 import { NoticeIconData } from '@/components/NoticeIcon';
-import { getConfiguration, abpApiDefinition } from '@/services/global';
+import { getConfiguration } from '@/services/global';
 import { setAuthority } from '@/utils/authority';
 import { InitThemeSettings } from '@/utils/utils';
 import { ConnectState } from './connect.d';
+
 
 export namespace ApplicationConfiguration {
   export interface Response {

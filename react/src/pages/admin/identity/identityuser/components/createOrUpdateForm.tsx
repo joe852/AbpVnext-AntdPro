@@ -1,9 +1,9 @@
 import React from "react";
 import Modal from "antd/lib/modal/Modal";
 import { Tabs, Form, Checkbox, Input, Button } from "antd";
-import { IdentityRoleDto } from "@/pages/admin/role/data";
 import { connect, Dispatch } from "dva";
 import { IdentityUserCreateOrUpdateDto } from "../data";
+import { IdentityRoleDto } from "../../identityrole/data";
 
 const { TabPane } = Tabs;
 interface CreateOrUpdateFormProps {

@@ -28,3 +28,14 @@ export async function updateUser(data:IdentityUserCreateOrUpdateDto): Promise<an
     data,
   });
 }
+export async function deleteUser(id:string): Promise<any> {
+  return request(`api/identity/users/${id}`,{
+    method:'DELETE',
+  });
+}
+
+export async function getUserClaimTypes(id:string): Promise<any> {
+  return request(`api/identity/users/${id}/claims`,{
+    method:'GET',
+  });
+}

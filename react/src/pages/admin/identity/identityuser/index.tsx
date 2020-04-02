@@ -11,10 +11,12 @@ import check from '@/components/Authorized/CheckPermissions';
 import Permissions from '@/utils/permissions';
 import PermissionManagement from '@/components/PermissionsManagement';
 import { GetPermissionListResultDto } from '@/services/data';
-import { IdentityUserDto, IdentityUserCreateOrUpdateDto } from './data';
-import { queryUsers } from './service';
+import { useRequest } from '@umijs/hooks';
+import { IdentityUserDto, IdentityUserCreateOrUpdateDto, IdentityUserClaimDto } from './data';
+import { queryUsers, getUserClaimTypes } from './service';
 import CreateOrUpdateForm from './components/createOrUpdateForm';
 import { IdentityRoleDto } from '../identityrole/data';
+import UpdateClaimTypesModal from './components/updateClaimTypesModal';
 
 const { confirm } = Modal;
 interface IdentityUserProps {
@@ -28,8 +30,17 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
 
   const actionRef = useRef<ActionType>();
   const [modalVisible, handleModalVisible] = useState<boolean>(false);
+  const [claimsModalVisible, handleClaimsModalVisible] = useState<boolean>(false);
+  const [userClaimTypes, setUserClaimTypes] = useState<IdentityUserClaimDto[]>([]);
   const [userId, handleUserId] = useState<string>("")
   const [permissionModalVisible, handlePermissionModalVisible] = useState<boolean>(false);
+  const {run:doGetUserClaimTypes} =useRequest(getUserClaimTypes,{
+    manual:true,
+    onSuccess:(result)=>{
+      setUserClaimTypes(result);
+      handleClaimsModalVisible(true);
+    }
+  })
   /**
    * 编辑或新增用户
    * @param id 用户id
@@ -79,6 +90,11 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
       },
     });
   };
+
+  const handleUpdateUserClaimModalOpen=(id:string)=>{
+
+    doGetUserClaimTypes(id);
+  }
   const columns: ProColumns<IdentityUserDto>[] = [
     {
       title: '操作',
@@ -91,7 +107,7 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
               {
                 check(Permissions.AbpIdentity.Users.Create, <Menu.Item onClick={() => { handleEditOrAdd(record.id) }} key="edit">编辑</Menu.Item>, null)
               }
-
+               <Menu.Item key="claims" onClick={() => handleUpdateUserClaimModalOpen(record.id)}>声明</Menu.Item>
               <Menu.Item key="approval" onClick={() => openPermissionModal(record.id)}>权限</Menu.Item>
               <Menu.Item key="remove" onClick={() => handlDeleteUser(record.id)}>删除</Menu.Item>
             </Menu>
@@ -127,7 +143,7 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
         </Button>
         ]}
         request={async (params = {}) => {
-          const response = await queryUsers({ skipCount: params.current! - 1, maxResultCount: params.pageSize });
+          const response = await queryUsers({ skipCount: (params.current! - 1) * params.pageSize!, maxResultCount: params.pageSize });
           const data = response.items;
           return {
             data,
@@ -152,6 +168,10 @@ const IdentityUser: React.FC<IdentityUserProps> = ({ dispatch, allRoles, createO
         modalVisible={permissionModalVisible}
         permissions={permissions}
       />
+      <UpdateClaimTypesModal
+      claimTypes={userClaimTypes}
+      onCancel={()=>handleClaimsModalVisible(false)}
+      visible={claimsModalVisible}  />
     </PageHeaderWrapper>
 
   )

@@ -68,7 +68,7 @@ const Editions: React.FC = () => {
           </Button>
         ]}
         request={async (params = {}) => {
-          const response = await queryEditions({ skipCount: params.current! - 1, maxResultCount: params.pageSize });
+          const response = await queryEditions({ skipCount: (params.current! - 1) * params.pageSize!, maxResultCount: params.pageSize });
           const data = response.items;
           return {
             data,

@@ -5,11 +5,11 @@ import { Button, Tag } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { connect } from "dva";
 import { ConnectState } from "@/models/connect";
+import { Dispatch } from "redux";
 import { AuditLogDto } from './data.d';
 import { queryAuditLogs } from "./service";
 import styles from './style.less';
 import DetailAuditLog from "./component/detailAuditLog";
-import { Dispatch } from "redux";
 
 const HttpStateCode = {
   '100': '100 - Continue',
@@ -115,7 +115,7 @@ const AuditLogging: React.FC<AuditLoggingProps> = props => {
         actionRef={actionRef}
         rowKey="id"
         request={async (params = {}) => {
-          const response = await queryAuditLogs({ ...params, skipCount: params.current! - 1, maxResultCount: params.pageSize });
+          const response = await queryAuditLogs({ skipCount: (params.current! - 1) * params.pageSize!, maxResultCount: params.pageSize });
           const data = response.items;
           return {
             data,

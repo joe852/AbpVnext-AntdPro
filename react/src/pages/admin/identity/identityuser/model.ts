@@ -2,9 +2,9 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
 import { IdentityUserCreateOrUpdateDto } from './data';
-import { getUserRoles, createUser, updateUser, getUser } from './service';
+import { getUserRoles, createUser, updateUser, getUser, deleteUser } from './service';
 import { IdentityRoleDto } from '../identityrole/data';
-import { queryRoles, deleteUser } from '../identityrole/service';
+import { queryRoles } from '../identityrole/service';
 
 
 
